@@ -1,0 +1,131 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block content %}
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Audio Recording</title>
+    <!-- Add Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Add Tailwind CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.16/dist/tailwind.min.css" rel="stylesheet">
+</head>
+<body class="text-center">
+    <div class="container mt-5">
+        <h1 class="text-center">Audio Recording</h1>
+        
+        <!-- Audio recording interface -->
+        <div class="my-5">
+            <button id="start-recording" class="btn btn-primary">Start Recording</button>
+            <button id="stop-recording" class="btn btn-danger" disabled>Stop Recording</button>
+            <p class="mt-3">Recording status: <span id="recording-status">Not Recording</span></p>
+        </div>
+
+        <!-- Display recorded audio -->
+        <div class="my-5">
+            <audio id="audio" controls class="mx-auto"></audio>
+        </div>
+
+        <!-- Form to submit recorded audio -->
+        <form method="post" action="{% url 'record_audio' %}" class="mt-3" id="audio-form">
+            {% csrf_token %}
+            <input type="hidden" name="recorded_audio" id="recorded-audio" />
+
+            <!-- Submit button for recorded audio -->
+            <div class="container">
+                <div class="row justify-content-center">
+                    <div class="col-md-6 text-center">
+                        <button id="submit-audio" class="btn btn-lg btn-primary" type="submit" disabled>Upload Recorded Audio</button>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+
+    <!-- Include JavaScript and AJAX -->
+    <script>
+        const startButton = document.getElementById('start-recording');
+        const stopButton = document.getElementById('stop-recording');
+        const recordingStatus = document.getElementById('recording-status');
+        const audioElement = document.getElementById('audio');
+        const audioForm = document.getElementById('audio-form');
+        const recordedAudioInput = document.getElementById('recorded-audio');
+        const submitButton = document.getElementById('submit-audio');
+
+        let mediaRecorder;
+        let audioChunks = [];
+
+        startButton.addEventListener('click', async () => {
+            const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+            mediaRecorder = new MediaRecorder(stream);
+
+            mediaRecorder.ondataavailable = (event) => {
+                if (event.data.size > 0) {
+                    audioChunks.push(event.data);
+                }
+            };
+
+            mediaRecorder.onstop = () => {
+                const audioBlob = new Blob(audioChunks, { type: 'audio/m4a' });
+                const reader = new FileReader();
+
+                reader.onloadend = () => {
+                    const base64Data = reader.result.split(',')[1];
+                    recordedAudioInput.value = base64Data;
+                    submitButton.removeAttribute('disabled'); // Enable submit button
+                };
+
+                reader.readAsDataURL(audioBlob);
+
+                const audioUrl = URL.createObjectURL(audioBlob);
+                audioElement.src = audioUrl;
+            };
+
+            mediaRecorder.start();
+            recordingStatus.textContent = 'Recording...';
+            startButton.setAttribute('disabled', 'disabled');
+            stopButton.removeAttribute('disabled');
+        });
+
+        stopButton.addEventListener('click', () => {
+            mediaRecorder.stop();
+            recordingStatus.textContent = 'Not Recording';
+            startButton.removeAttribute('disabled');
+            stopButton.setAttribute('disabled', 'disabled');
+        });
+
+        // Handle form submission using AJAX
+        audioForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            const formData = new FormData(audioForm);
+
+            fetch(audioForm.action, {
+                method: 'POST',
+                body: formData,
+                headers: {
+                    'X-CSRFToken': csrf_token,
+                },
+            })
+            .then((response) => response.json())
+            .then((data) => {
+                // Handle the JSON response from Django, e.g., show a success message
+                console.log(data);
+            })
+            .catch((error) => {
+                // Handle errors
+                console.error(error);
+            });
+        });
+    </script>
+
+    <!-- Add Bootstrap JS (required for some Bootstrap components to work) -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
+
+
+</body>
+</html>
+
+
+{% endblock content %}

@@ -1,0 +1,61 @@
+{% extends 'base.html' %}
+
+{% load static %} 
+
+{% block content %}
+<div id="about" class="container-fluid">
+    <div class="row">
+        <div class="row">
+            
+            <div class="col-md-6">
+                <h4 class="display-4 text-center font-weight-bold text-dark" style="border-bottom: 2px solid green;">About Us</h4>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="text-content py-2">
+                <p>Welcome to the future of automotive security!</p>
+                <p>At MultiLock Technologies, we are dedicated to revolutionizing the way you secure your vehicle. Our cutting-edge multi-biometric car door lock system combined with a user-friendly mobile app ensures that you never have to worry about losing or misplacing your car keys again.</p>
+                <p>Our mission is to provide you with a seamless and secure experience, making your daily commute and car ownership hassle-free.</p>
+                <p>Key Features:</p>
+                <ul>
+                    <li>Multi-Biometric Authentication: Our system utilizes advanced biometric technology to ensure only authorized individuals can access your vehicle.</li>
+                    <li>Mobile App Convenience: With our mobile app, you can easily unlock your car doors, start your engine remotely, and even share access with trusted family and friends.</li>
+                    <li>Lost Key Replacement: Say goodbye to the stress of lost or misplaced keys. Our mobile app is your key, and it's always with you.</li>
+                    <li>Advanced Security: Your vehicle's security is our top priority. Rest assured that our system provides the highest level of protection against unauthorized access.</li>
+                </ul>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <!-- Add your background images here -->
+            <div class="">
+                <div id="imageCarousel" class="carousel slide" data-bs-ride="carousel">
+                    <div class="carousel-inner">
+                        <div class="carousel-item active">
+                            <img src="{% static 'image1.jpg' %}" class="d-block mx-auto" alt="Image 1" style="width: 600px; height: 500px;">
+                        </div>
+                        <div class="carousel-item">
+                            <img src="{% static 'image2.jpg' %}" class="d-block mx-auto" alt="Image 2" style="width: 600px; height: 500px;">
+                        </div>
+                        <div class="carousel-item">
+                            <img src="{% static 'image3.jpg' %}" class="d-block mx-auto" alt="Image 3" style="width: 600px; height: 500px;">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+<script>
+    $(document).ready(function () {
+        // Initialize the carousel
+        $('#imageCarousel').carousel({
+            interval: 1000 // Set the interval to 1 second (1000 milliseconds)
+        });
+    });
+</script>
+
+{% endblock %}

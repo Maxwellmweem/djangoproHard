@@ -1,0 +1,49 @@
+{% extends 'base.html' %}
+
+{% load static %} 
+
+{% block content %}
+<div id="services" class="container-fluid">
+    <div class="row">
+        <div class="col-md-6">
+            <div class="text-content">
+                <h4 class="display-4 text-center font-weight-bold text-dark" style="border-bottom: 2px solid green;">Services</h4>
+                <p>Our MultiBiometric Car Door System offers state-of-the-art security and convenience for your vehicle.</p>
+                <p>With our cutting-edge technology, we provide:</p>
+                <ul>
+                    <li>Facial Recognition: Our system uses advanced facial recognition technology to grant access to authorized users. Your face is your key!</li>
+                    <li>Voice Recognition: In addition to facial recognition, our system offers voice recognition. Simply speak your command, and your car doors will unlock.</li>
+                    <li>Mobile App Integration: Control your car's security with our user-friendly mobile app. Lock and unlock your doors, start your engine remotely, and manage access permissions on the go.</li>
+                    <li>Enhanced Security: We prioritize your safety and ensure the highest level of protection against unauthorized access.</li>
+                </ul>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <!-- Add images or background videos related to services here -->
+            <div class="">
+                <div id="imageCarousel" class="carousel slide" data-bs-ride="carousel">
+                    <div class="carousel-inner">
+                        <div class="carousel-item active">
+                            <img src="{% static 'image4.jpg' %}" class="d-block mx-auto" alt="Facial Recognition" style="width: 600px; height: 500px;">
+                        </div>
+                        <div class="carousel-item">
+                            <img src="{% static 'image5.jpg' %}" class="d-block mx-auto" alt="Voice Recognition" style="width: 600px; height: 500px;">
+                        </div>
+                        <div class="carousel-item">
+                            <img src="{% static 'image6.jpg' %}" class="d-block mx-auto" alt="Mobile App Integration" style="width: 600px; height: 500px;">
+                        </div>
+                    </div>
+                </div>
+                <!-- You can add images or background videos here -->
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+<script>
+    // You can add JavaScript for services section if needed
+</script>
+{% endblock %}

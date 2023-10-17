@@ -1,0 +1,42 @@
+
+.home-page {
+    position: relative;
+    overflow: hidden;
+}
+
+
+#background-video {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    z-index: -1;
+}
+
+/* Styles for the navigation bar and heading container */
+/* Add the light grey background to cover the entire heading area */
+body {
+    background-color: lightgrey;
+    margin: 0; /* Remove body margin to cover the entire viewport */
+}
+
+/* Center the heading container */
+.heading-container {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+    color: #ffffff;
+    font-size: 48px;
+    font-weight: bold;
+}
+
+/* Styles for the nav bar links */
+nav.my-2.my-md-0.mr-md-3 a {
+    color: white;
+    font-weight: bold;
+}
+
